@@ -1,0 +1,10 @@
+services: 
+  Interdiciplinar-pg:
+    image: bitnami/postgresql
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=inter
+    ports:
+      - "5433:5432"
+  
