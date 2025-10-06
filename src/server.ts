@@ -5,6 +5,9 @@ import Fastify from "fastify"
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler, type ZodTypeProvider } from "fastify-type-provider-zod"
 import { env } from "./lib/env.ts"
 import { getUser } from "./http/get-user.ts"
+import { getOrder } from "./http/get-order.ts"
+import { getProduct } from "./http/get-product.ts"
+import { getItems } from "./http/get-itemPedido.ts"
 
 
 const server = Fastify().withTypeProvider<ZodTypeProvider>()
@@ -13,7 +16,7 @@ server.setSerializerCompiler(serializerCompiler)
 server.setValidatorCompiler(validatorCompiler)
 
 server.register(fastifyCors, {
-    origin: "localhost:5173",
+    origin: "*",
 })
 
 server.register(fastifySwagger, {
@@ -32,6 +35,9 @@ server.register(fastifySwaggerUi, {
 })
 
 server.register(getUser)
+server.register(getOrder)
+server.register(getProduct)
+server.register(getItems)
 
 server.get("/helth", () => {
     return 'OK';

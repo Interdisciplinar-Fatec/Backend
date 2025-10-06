@@ -5,4 +5,11 @@ GET {{baseURL}}/helth
 ###
 GET {{baseURL}}/users
 
+###
+GET {{baseURL}}/orders
 
+###
+GET {{baseURL}}/products
+
+###
+GET {{baseURL}}/items
