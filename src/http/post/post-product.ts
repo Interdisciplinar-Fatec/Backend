@@ -3,6 +3,8 @@ import z from "zod";
 import { db } from "../../db/connection.ts";
 import { schema } from "../../db/schemas/index.ts";
 import { eq } from "drizzle-orm";
+import { selectProductName } from "../../functions/select-productName.ts";
+import { insertProduct } from "../../functions/insert-product.ts";
 
 export const postProduct:FastifyPluginAsyncZod = async (server) => {
     server.post("/product", {
@@ -24,17 +26,17 @@ export const postProduct:FastifyPluginAsyncZod = async (server) => {
 
         const nome_normalizado = nome.toLowerCase().trim()
 
-        const p = await db.select().from(schema.produtos).where(eq(schema.produtos.nome_normalizado, nome_normalizado))
+        const p = await selectProductName(nome_normalizado)
         if(p.length > 0){
             return reply.status(400).send({message: "Produto já cadastrado!"})
         }
 
-        return await db.insert(schema.produtos).values({
+        return await insertProduct({
             nome: nome,
             nome_normalizado: nome_normalizado,
+            preco: preco,
             descricao: descricao,
-            marca: marca,
-            preco: preco
-        }).returning()
+            marca: marca
+        })
     })
 }

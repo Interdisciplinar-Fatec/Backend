@@ -1,14 +1,16 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { db } from "../../db/connection.ts";
-import { schema } from "../../db/schemas/index.ts";
+import { selectItemsOrder } from "../../functions/select-itemsOrder.ts";
+import z from "zod";
 
 export const getItems:FastifyPluginAsyncZod = async (server) => {
-    server.get("/items", async (request, reply) => {
-        return await db.select({
-            id: schema.item_pedido.id,
-            id_pedido: schema.item_pedido.id_pedido,
-            id_produto: schema.item_pedido.id_produto,
-            quantidade: schema.item_pedido.quantidade
-        }).from(schema.item_pedido)
+    server.get("/items/:id_pedido", {
+        schema: {
+            params: z.object({
+                id_pedido: z.string()
+            })
+        }
+    },async (request, reply) => {
+        const {id_pedido} = request.params
+        return await selectItemsOrder(id_pedido)
     })
 }

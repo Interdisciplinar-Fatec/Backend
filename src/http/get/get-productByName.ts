@@ -1,8 +1,6 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { db } from "../../db/connection.ts";
-import { schema } from "../../db/schemas/index.ts";
 import z from "zod";
-import { like } from "drizzle-orm";
+import { selectProductName } from "../../functions/select-productName.ts";
 
 export const getProdcutByName:FastifyPluginAsyncZod = async (server) => {
     server.get("/product/:nome", {
@@ -15,9 +13,6 @@ export const getProdcutByName:FastifyPluginAsyncZod = async (server) => {
         const {nome} = request.params
 
         const nome_normalizado = nome.toLowerCase().trim()
-
-        return await db.select()
-        .from(schema.produtos)
-        .where(like(schema.produtos.nome_normalizado, `%${nome_normalizado}%`))
+        return await selectProductName(nome_normalizado)
     })
 }
