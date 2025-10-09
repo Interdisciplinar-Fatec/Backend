@@ -6,6 +6,9 @@ GET {{baseURL}}/helth
 GET {{baseURL}}/users
 
 ###
+GET {{baseURL}}/users/d0a74996-0fff-4dff-8fbd-dd86aa3f6ab1
+
+###
 GET {{baseURL}}/orders
 
 ###
@@ -13,3 +16,34 @@ GET {{baseURL}}/products
 
 ###
 GET {{baseURL}}/items
+
+###
+POST {{baseURL}}/order
+Content-Type: application/json
+
+{
+  "CPF": "12345678999",
+  "name": "Carlos Santos",
+  "email": "carlos.santos@example.com",
+  "endereço": "Rua das Palmeiras, 789",
+  "data_nascimento": "1992-03-10",
+  "telefone": "(31) 98765-4321"
+}
+
+###
+PATCH {{baseURL}}/order/6ebdb95e-bf80-429b-9c3a-49030e2b753f/Pronto
+
+###
+POST {{baseURL}}/product
+Content-Type: application/json
+
+{
+  "nome": "Celular Android",
+  "preco": 999.90,
+  "descricao": "Motorola bom estado",
+  "marca": "Motorola"
+}
+
+###
+GET {{baseURL}}/product/Celular
+

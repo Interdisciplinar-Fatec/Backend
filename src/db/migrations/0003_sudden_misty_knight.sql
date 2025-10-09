@@ -1,0 +1,1 @@
+ALTER TABLE "produtos" ADD COLUMN "nome_normalizado" text NOT NULL;
