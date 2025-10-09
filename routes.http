@@ -6,10 +6,51 @@ GET {{baseURL}}/helth
 GET {{baseURL}}/users
 
 ###
+GET {{baseURL}}/users/12345678949
+
+###
 GET {{baseURL}}/orders
 
 ###
 GET {{baseURL}}/products
 
 ###
-GET {{baseURL}}/items
+GET {{baseURL}}/items/e45893f7-d018-4901-930b-da7ab419e74d
+
+###
+POST {{baseURL}}/order
+Content-Type: application/json
+
+{
+  "CPF": "12345678949",
+  "name": "Carlos Santos",
+  "email": "carlos.santos@example.com",
+  "endereco": "Rua das Palmeiras, 789",
+  "data_nascimento": "1992-03-10",
+  "telefone": "(31) 98765-4321",
+  "items": [
+    {
+      "id_produto": "4245e747-04da-46b2-870e-ccafedb8b824",
+      "quantidade": 2
+    }
+  ]
+}
+
+
+###
+PATCH {{baseURL}}/order/d48a6f91-1555-4c29-aa16-d21d136e0c08/Pronto
+
+###
+POST {{baseURL}}/product
+Content-Type: application/json
+
+{
+  "nome": "TV Plsama 4p",
+  "preco": 3999.90,
+  "descricao": "Semi-nova-",
+  "marca": "LG"
+}
+
+###
+GET {{baseURL}}/product/Celular
+

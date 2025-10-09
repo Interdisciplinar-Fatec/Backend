@@ -15,6 +15,34 @@
       "when": 1759709398289,
       "tag": "0001_rainy_ezekiel_stane",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1759975786932,
+      "tag": "0002_typical_devos",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1759975992747,
+      "tag": "0003_sudden_misty_knight",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1760024949100,
+      "tag": "0004_hot_magdalene",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1760026313515,
+      "tag": "0005_parched_jamie_braddock",
+      "breakpoints": true
     }
   ]
 }
