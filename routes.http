@@ -4,22 +4,28 @@ GET {{baseURL}}/helth
 
 ###
 GET {{baseURL}}/users
+Authorization: Bearer {{token}}
 
 ###
 GET {{baseURL}}/users/12345678949
+Authorization: Bearer {{token}}
 
 ###
 GET {{baseURL}}/orders
+Authorization: Bearer {{token}}
 
 ###
 GET {{baseURL}}/products
+Authorization: Bearer {{token}}
 
 ###
 GET {{baseURL}}/items/e45893f7-d018-4901-930b-da7ab419e74d
+Authorization: Bearer {{token}}
 
 ###
 POST {{baseURL}}/order
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "CPF": "12345678949",
@@ -39,10 +45,12 @@ Content-Type: application/json
 
 ###
 PATCH {{baseURL}}/order/d48a6f91-1555-4c29-aa16-d21d136e0c08/Pronto
+Authorization: Bearer {{token}}
 
 ###
 POST {{baseURL}}/product
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "nome": "TV Plsama 4p",
@@ -53,4 +61,19 @@ Content-Type: application/json
 
 ###
 GET {{baseURL}}/product/Celular
+Authorization: Bearer {{token}}
 
+
+###
+# @name login
+POST {{baseURL}}/login
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "CPF": "000.000.000-01",
+  "senha": "senhafortedoAdministrador"  
+}
+
+###
+@token = {{login.response.body.$.token}}

@@ -8,6 +8,7 @@ import { insertProduct } from "../../functions/insert-product.ts";
 
 export const postProduct:FastifyPluginAsyncZod = async (server) => {
     server.post("/product", {
+        preHandler:[server.authenticate],
         schema: {
             body: z.object({
                 nome: z.string().min(3),

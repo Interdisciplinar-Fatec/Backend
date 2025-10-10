@@ -1,3 +1,4 @@
+import { admin } from "./admin.ts";
 import { item_pedido } from "./itemPedido.ts";
 import { pedidos } from "./pedidos.ts";
 import { produtos } from "./produtos.ts";
@@ -7,5 +8,6 @@ export const schema = {
     users,
     pedidos,
     produtos,
-    item_pedido
+    item_pedido,
+    admin
 }

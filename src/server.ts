@@ -13,12 +13,16 @@ import { postOrder } from "./http/post/post-orderCliente.ts"
 import { updateOrder } from "./http/update/update-order.ts"
 import { postProduct } from "./http/post/post-product.ts"
 import { getProdcutByName } from "./http/get/get-productByName.ts"
-
+import { LoginAdmin } from "./http/login/login.ts"
+import authPlugin from "./plugins/authenticate-plugin.ts"
+import { refreshToken } from "./http/login/refresh-token.ts"
 
 const server = Fastify().withTypeProvider<ZodTypeProvider>()
 
 server.setSerializerCompiler(serializerCompiler)
 server.setValidatorCompiler(validatorCompiler)
+
+server.register(authPlugin)
 
 server.register(fastifyCors, {
     origin: "*",
@@ -39,6 +43,7 @@ server.register(fastifySwaggerUi, {
     routePrefix: "/docs",
 })
 
+
 server.register(getUsers)
 server.register(getUserByCPF)
 server.register(getOrder)
@@ -50,6 +55,9 @@ server.register(postOrder)
 server.register(postProduct)
 
 server.register(updateOrder)
+
+server.register(LoginAdmin)
+server.register(refreshToken)
 
 server.get("/helth", () => {
     return 'OK';

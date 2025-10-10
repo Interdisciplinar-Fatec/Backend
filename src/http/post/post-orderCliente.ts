@@ -9,6 +9,7 @@ import { schema } from "../../db/schemas/index.ts";
 
 export const postOrder:FastifyPluginAsyncZod = async (server) => {
     server.post("/order", {
+        preHandler: [server.authenticate],
         schema: {
             body: z.object({
                 CPF: z.string(),

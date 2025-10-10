@@ -1,0 +1,32 @@
+import { type FastifyPluginAsyncZod } from "fastify-type-provider-zod";
+import z from "zod";
+import { AuthService } from "../../service/authenticate-service.ts";
+
+export const LoginAdmin: FastifyPluginAsyncZod = async (server) => {
+    server.post("/login", {
+        schema: {
+            body: z.object({
+                CPF: z.string(),
+                senha: z.string().min(6)
+            })
+        }
+    }, async (request, reply) => {
+        const {CPF, senha} = request.body
+
+        const auth = new AuthService(server.jwt)
+        const {acesstoken, refreshtoken} = await auth.login(CPF, senha)
+       
+        reply.setCookie("refresjToken", refreshtoken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: true,
+            path: "/",
+            maxAge: 60 * 60* 24 * 7
+        })
+
+        return reply.send({
+            message: 'Login feito com sucesso',
+            "token": acesstoken
+        })
+    })
+}
