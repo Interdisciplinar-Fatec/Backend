@@ -17,7 +17,7 @@ export class AuthService {
         const password = bcrypt.compare(admin.senha, senha)
         if(!password) { throw new Error("Senha incorreta!")}
 
-        const acesstoken = this.jwt.sign({sub: admin.id}, {expiresIn: "5min"})
+        const acesstoken = this.jwt.sign({sub: admin.id}, {expiresIn: "25min"})
         const refreshtoken = this.jwt.sign({sub: admin.id}, {expiresIn: "1d"})
 
         return {acesstoken, refreshtoken}

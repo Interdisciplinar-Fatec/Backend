@@ -6,7 +6,6 @@ import { insertUser } from "../../functions/insert-user.ts";
 import { db } from "../../db/connection.ts";
 import { schema } from "../../db/schemas/index.ts";
 
-
 export const postOrder:FastifyPluginAsyncZod = async (server) => {
     server.post("/order", {
         preHandler: [server.authenticate],
