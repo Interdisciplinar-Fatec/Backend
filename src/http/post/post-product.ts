@@ -1,13 +1,11 @@
 import { type FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
-import { db } from "../../db/connection.ts";
-import { schema } from "../../db/schemas/index.ts";
-import { eq } from "drizzle-orm";
 import { selectProductName } from "../../functions/select-productName.ts";
 import { insertProduct } from "../../functions/insert-product.ts";
 
 export const postProduct:FastifyPluginAsyncZod = async (server) => {
     server.post("/product", {
+        preHandler:[server.authenticate],
         schema: {
             body: z.object({
                 nome: z.string().min(3),
@@ -28,7 +26,7 @@ export const postProduct:FastifyPluginAsyncZod = async (server) => {
 
         const p = await selectProductName(nome_normalizado)
         if(p.length > 0){
-            return reply.status(400).send({message: "Produto já cadastrado!"})
+            return reply.status(400).send({message: "Produto já cadastrado!", id_produto: p[0].id})
         }
 
         return await insertProduct({

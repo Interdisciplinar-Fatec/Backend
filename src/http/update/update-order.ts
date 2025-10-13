@@ -5,6 +5,7 @@ import { updateOrderStatus } from "../../functions/update-order.ts";
 
 export const updateOrder:FastifyPluginAsyncZod = async (server) => {
     server.patch("/order/:id/:status", {
+        preHandler: [server.authenticate],
         schema: {
             params: z.object({
                id: z.uuid(),

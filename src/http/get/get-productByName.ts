@@ -4,6 +4,7 @@ import { selectProductName } from "../../functions/select-productName.ts";
 
 export const getProdcutByName:FastifyPluginAsyncZod = async (server) => {
     server.get("/product/:nome", {
+        preHandler: [server.authenticate],
         schema: {
             params: z.object({
                 nome: z.string()

@@ -4,6 +4,7 @@ import z from "zod";
 
 export const getItems:FastifyPluginAsyncZod = async (server) => {
     server.get("/items/:id_pedido", {
+        preHandler: [server.authenticate],
         schema: {
             params: z.object({
                 id_pedido: z.string()
