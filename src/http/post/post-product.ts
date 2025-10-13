@@ -7,6 +7,9 @@ export const postProduct:FastifyPluginAsyncZod = async (server) => {
     server.post("/product", {
         preHandler:[server.authenticate],
         schema: {
+            tags: ["Produtos"],
+            summary: "Criação de produtos",
+            description: "Cria novos produtos para serem usados nos pedidos",
             body: z.object({
                 nome: z.string().min(3),
                 preco: z.number(),

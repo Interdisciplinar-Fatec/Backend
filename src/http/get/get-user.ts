@@ -6,6 +6,9 @@ export const getUserByCPF:FastifyPluginAsyncZod = async (server) => {
     server.get("/user/:CPF", {
         preHandler: [server.authenticate],
         schema: {
+            tags: ["Cliente"],
+            summary: "Buscar um usuario no banco",
+            description: "retornar os dados de um user com base no CPF",
             params: z.object({
                 CPF: z.string()
             })

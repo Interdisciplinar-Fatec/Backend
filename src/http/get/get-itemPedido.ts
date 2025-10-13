@@ -6,6 +6,9 @@ export const getItems:FastifyPluginAsyncZod = async (server) => {
     server.get("/items/:id_pedido", {
         preHandler: [server.authenticate],
         schema: {
+            tags: ["Items"],
+            summary: "Listar os items de um pedido",
+            description: "retornar o Id do pedido e seus respectivos produtos",
             params: z.object({
                 id_pedido: z.string()
             })

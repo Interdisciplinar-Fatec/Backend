@@ -10,6 +10,9 @@ export const postOrder:FastifyPluginAsyncZod = async (server) => {
     server.post("/order", {
         preHandler: [server.authenticate],
         schema: {
+            tags: ["Pedidos"],
+            summary: "Criação de pedidos/usuarios",
+            description: "Cria um usuario caso ainda não exista e seu pedido",
             body: z.object({
                 CPF: z.string(),
                 name: z.string().min(3),
