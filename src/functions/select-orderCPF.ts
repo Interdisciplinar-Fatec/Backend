@@ -6,8 +6,8 @@ type userFixed = Omit<userType, 'created_at'> & {
     createdAt: Date
 }
 
-export const selectOrderCPF = async (CPF: string) => {
-    const users:userFixed[] = await db.select().from(schema.users).where(eq(schema.users.CPF, CPF))
+export const selectOrderCPF = async (userId: string) => {
+    const users:userFixed[] = await db.select().from(schema.users).where(eq(schema.users.id, userId))
     if(users.length <= 0) throw new Error("Usuario não encontrado")
     const user = users[0]
 

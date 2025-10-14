@@ -4,9 +4,12 @@ import { selectProductName } from "../../functions/select-productName.ts";
 import { insertProduct } from "../../functions/insert-product.ts";
 
 export const postProduct:FastifyPluginAsyncZod = async (server) => {
-    server.post("/product", {
+    server.post("/product_admin", {
         preHandler:[server.authenticate],
         schema: {
+            tags: ["Produtos"],
+            summary: "Criação de produtos",
+            description: "Cria novos produtos para serem usados nos pedidos",
             body: z.object({
                 nome: z.string().min(3),
                 preco: z.number(),

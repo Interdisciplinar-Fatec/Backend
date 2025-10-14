@@ -22,6 +22,7 @@ import { LoginAdmin } from "./http/login/login.ts"
 import authPlugin from "./plugins/authenticate-plugin.ts"
 import { refreshToken } from "./http/login/refresh-token.ts"
 import { getOrderCPF } from "./http/get/get-orderByCPF.ts"
+import { getUserId } from "./http/get/get-userId.ts"
 
 const server = Fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -31,7 +32,8 @@ server.setValidatorCompiler(validatorCompiler)
 server.register(authPlugin)
 
 server.register(fastifyCors, {
-    origin: "*",
+    origin: "http://localhost:5173",
+    credentials: true
 })
 
 server.register(fastifySwagger, {
@@ -61,6 +63,7 @@ server.register(postProduct)
 server.register(updateOrder)
 server.register(LoginAdmin)
 server.register(refreshToken)
+server.register(getUserId)
 
 server.get("/helth", () => {
     return 'OK';
