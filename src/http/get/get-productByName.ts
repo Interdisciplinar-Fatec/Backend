@@ -3,7 +3,7 @@ import z from "zod";
 import { selectProductName } from "../../functions/select-productName.ts";
 
 export const getProdcutByName:FastifyPluginAsyncZod = async (server) => {
-    server.get("/product/:nome", {
+    server.get("/product_admin/:nome", {
         preHandler: [server.authenticate],
         schema: {
             tags: ["Produtos"],

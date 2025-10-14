@@ -7,7 +7,7 @@ import { db } from "../../db/connection.ts";
 import { schema } from "../../db/schemas/index.ts";
 
 export const postOrder:FastifyPluginAsyncZod = async (server) => {
-    server.post("/order", {
+    server.post("/order_admin", {
         preHandler: [server.authenticate],
         schema: {
             tags: ["Pedidos"],

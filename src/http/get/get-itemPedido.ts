@@ -3,7 +3,7 @@ import { selectItemsOrder } from "../../functions/select-itemsOrder.ts";
 import z from "zod";
 
 export const getItems:FastifyPluginAsyncZod = async (server) => {
-    server.get("/items/:id_pedido", {
+    server.get("/items_admin/:id_pedido", {
         preHandler: [server.authenticate],
         schema: {
             tags: ["Items"],

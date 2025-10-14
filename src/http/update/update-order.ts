@@ -4,7 +4,7 @@ import { selectOrderById } from "../../functions/select-orderById.ts";
 import { updateOrderStatus } from "../../functions/update-order.ts";
 
 export const updateOrder:FastifyPluginAsyncZod = async (server) => {
-    server.patch("/order/:id/:status", {
+    server.patch("/order_admin/:id/:status", {
         preHandler: [server.authenticate],
         schema: {
             tags: ["Pedidos"],

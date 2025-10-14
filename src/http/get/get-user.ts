@@ -3,7 +3,7 @@ import z from "zod";
 import { selectOneUser } from "../../functions/select-user.ts";
 
 export const getUserByCPF:FastifyPluginAsyncZod = async (server) => {
-    server.get("/user/:CPF", {
+    server.get("/user_admin/:CPF", {
         preHandler: [server.authenticate],
         schema: {
             tags: ["Cliente"],
@@ -15,7 +15,6 @@ export const getUserByCPF:FastifyPluginAsyncZod = async (server) => {
         }
     },async (request, reply) => {
         const { CPF } = request.params;
-
         return await selectOneUser(CPF)
     })
 }

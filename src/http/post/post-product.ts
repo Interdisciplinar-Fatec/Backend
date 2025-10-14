@@ -4,7 +4,7 @@ import { selectProductName } from "../../functions/select-productName.ts";
 import { insertProduct } from "../../functions/insert-product.ts";
 
 export const postProduct:FastifyPluginAsyncZod = async (server) => {
-    server.post("/product", {
+    server.post("/product_admin", {
         preHandler:[server.authenticate],
         schema: {
             tags: ["Produtos"],
