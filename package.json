@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node --env-file .env --experimental-strip-types --watch src/server.ts",
     "start": "node --env-file .env --experimental-strip-types src/server.ts",
+    "createAdmin": "node --env-file .env ./src/scripts/script-admin.ts",
     "db:seed": "node --env-file .env --experimental-strip-types  ./src/db/seed.ts",
     "db:studio": "npx drizzle-kit studio",
     "db:generate": "npx drizzle-kit generate",

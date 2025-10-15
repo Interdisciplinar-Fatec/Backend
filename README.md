@@ -70,6 +70,16 @@ PASSWORD_ADMIN="senhafortedoAdministrador"
 docker-compose up -d
 ```
 
+5. **Crie o administrador antes de acessar rotas protegidas**:
+
+```bash
+npm run createAdmin
+# ou
+yarn createAdmin
+```
+
+> É necessário executar este script antes de usar qualquer rota que exija autenticação de administrador.
+
 ---
 
 ## 🚀 Scripts disponíveis
@@ -82,6 +92,7 @@ docker-compose up -d
 | `npm run db:studio`   | Abre o Drizzle Studio para inspeção do banco                    |
 | `npm run db:generate` | Gera os arquivos de migration                                   |
 | `npm run db:migrate`  | Executa as migrations no banco de dados                         |
+| `npm run createAdmin` | Cria o usuário administrador inicial                            |
 
 ---
 
@@ -150,6 +161,7 @@ Retorno:
 * Admins usam JWT.
 * Senha do admin configurada via `.env`: `PASSWORD_ADMIN`.
 * Token obtido via rota `/login` e enviado nos headers `Authorization: Bearer <token>`.
+* **É necessário criar o administrador** usando o script `createAdmin` antes de acessar qualquer rota protegida.
 
 ---
 

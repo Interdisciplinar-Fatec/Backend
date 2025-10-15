@@ -1,9 +1,115 @@
 {
-  "id": "b1f5b9dc-8559-4563-9a75-2414012953ad",
+  "id": "e6d75f56-1895-4d34-a71d-186f909b5858",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.admin": {
+      "name": "admin",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "cpf": {
+          "name": "cpf",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "senha": {
+          "name": "senha",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "admin_CPF_unique": {
+          "name": "admin_CPF_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "cpf"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.item_pedido": {
+      "name": "item_pedido",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "id_pedido": {
+          "name": "id_pedido",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_produto": {
+          "name": "id_produto",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantidade": {
+          "name": "quantidade",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 1
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "item_pedido_id_pedido_pedidos_id_fk": {
+          "name": "item_pedido_id_pedido_pedidos_id_fk",
+          "tableFrom": "item_pedido",
+          "tableTo": "pedidos",
+          "columnsFrom": [
+            "id_pedido"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "item_pedido_id_produto_produtos_id_fk": {
+          "name": "item_pedido_id_produto_produtos_id_fk",
+          "tableFrom": "item_pedido",
+          "tableTo": "produtos",
+          "columnsFrom": [
+            "id_produto"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.pedidos": {
       "name": "pedidos",
       "schema": "",
@@ -27,7 +133,19 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false,
-          "default": "'aberto'"
+          "default": "'pendente'"
+        },
+        "valor_total": {
+          "name": "valor_total",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "descri_o": {
+          "name": "descri_o",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         },
         "id_cliente": {
           "name": "id_cliente",
@@ -69,6 +187,12 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
+        "nome_normalizado": {
+          "name": "nome_normalizado",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "nome": {
           "name": "nome",
           "type": "text",
@@ -78,6 +202,12 @@
         "preco": {
           "name": "preco",
           "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "marca": {
+          "name": "marca",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -125,14 +255,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "senha": {
-          "name": "senha",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "endere_o": {
-          "name": "endere_o",
+        "endereco": {
+          "name": "endereco",
           "type": "text",
           "primaryKey": false,
           "notNull": true

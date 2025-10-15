@@ -1,5 +1,4 @@
 import { type FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import z from "zod";
 import { selectOrderCPF } from "../../functions/select-orderCPF.ts";
 import {type  OrdersClient } from "../../types/orderClient.ts";
 import { selectOneUserId } from "../../functions/select-userId.ts";
@@ -23,7 +22,7 @@ export const getOrderCPF:FastifyPluginAsyncZod = async (server) => {
             throw new Error("Usuario não encontrado")
         }
 
-        const orders =  await selectOrderCPF(user[0].id)
+        const orders:OrdersClient =  await selectOrderCPF(user[0].id)
         return reply.status(200).send(orders)
     })
 }

@@ -31,6 +31,8 @@ export const selectOrderCPF = async (userId: string) => {
         .select({
             pedidoId: schema.pedidos.id,
             dataPedido: schema.pedidos.data_pedido,
+            valorTotal: schema.pedidos.valor_total,
+            descricao: schema.pedidos.descricao,
             itemId: subquery.itemId,
             produtoId: subquery.produtoId,
             quantidade: subquery.quantidade,
@@ -48,6 +50,8 @@ export const selectOrderCPF = async (userId: string) => {
             const novoPedido = {
                 PedidoId: r.pedidoId,
                 DataPedido: r.dataPedido,
+                ValorPedido: r.valorTotal,
+                descricaoPedido: r.descricao,
                 Produtos: [] as any[]
             };
 

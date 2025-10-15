@@ -1,9 +1,49 @@
 {
-  "id": "b3ea43b2-c214-4bc9-bc4b-f1fe64532160",
-  "prevId": "b1f5b9dc-8559-4563-9a75-2414012953ad",
+  "id": "ec848ffc-5e43-482d-94db-052eeba6e92f",
+  "prevId": "e6d75f56-1895-4d34-a71d-186f909b5858",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.admin": {
+      "name": "admin",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "cpf": {
+          "name": "cpf",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "senha": {
+          "name": "senha",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "admin_CPF_unique": {
+          "name": "admin_CPF_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "cpf"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.item_pedido": {
       "name": "item_pedido",
       "schema": "",
@@ -93,7 +133,19 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false,
-          "default": "'aberto'"
+          "default": "'pendente'"
+        },
+        "valor_total": {
+          "name": "valor_total",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "descricao": {
+          "name": "descricao",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         },
         "id_cliente": {
           "name": "id_cliente",
@@ -135,6 +187,12 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
+        "nome_normalizado": {
+          "name": "nome_normalizado",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "nome": {
           "name": "nome",
           "type": "text",
@@ -144,6 +202,12 @@
         "preco": {
           "name": "preco",
           "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "marca": {
+          "name": "marca",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -191,14 +255,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "senha": {
-          "name": "senha",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "endere_o": {
-          "name": "endere_o",
+        "endereco": {
+          "name": "endereco",
           "type": "text",
           "primaryKey": false,
           "notNull": true

@@ -12,8 +12,8 @@ Authorization: Bearer {{token}}
 GET {{baseURL}}/user_admin/12345678949
 Authorization: Bearer {{token}}
 
-###
-GET {{baseURL}}/orders_admin
+### melhorar esta rota
+GET {{baseURL}}/orders_admin 
 Authorization: Bearer {{token}}
 
 ###
@@ -21,7 +21,7 @@ GET {{baseURL}}/products_admin
 Authorization: Bearer {{token}}
 
 ###
-GET {{baseURL}}/items_admin/48feef3a-a9e2-45ae-a107-4cf86b3b4002
+GET {{baseURL}}/items_admin/abe388e5-571e-4fcb-977c-d6e662757ea6
 Authorization: Bearer {{token}}
 
 ###
@@ -36,16 +36,18 @@ Authorization: Bearer {{token}}
   "endereco": "Rua das Palmeiras, 789",
   "data_nascimento": "1992-03-10",
   "telefone": "(31) 98765-4321",
+  "valor_total": 50,
+  "descricao": "O produto não liga mais",
   "items": [
     {
-      "id_produto": "4245e747-04da-46b2-870e-ccafedb8b824",
+      "id_produto": "c208be64-1109-48c9-b5bc-10b28434c020",
       "quantidade": 1
     }
   ]
 }
 
 ###
-PATCH {{baseURL}}/order_admin/d48a6f91-1555-4c29-aa16-d21d136e0c08/Pronto
+PATCH {{baseURL}}/order_admin/abe388e5-571e-4fcb-977c-d6e662757ea6/Pronto
 Authorization: Bearer {{token}}
 
 ###
@@ -61,7 +63,7 @@ Authorization: Bearer {{token}}
 }
 
 ###
-GET {{baseURL}}/product_admin/Celular
+GET {{baseURL}}/product_admin/Tv
 Authorization: Bearer {{token}}
 
 
@@ -80,10 +82,10 @@ Authorization: Bearer {{token}}
 @token = {{login.response.body.$.token}}
 
 // ------------- Public Routes  ----------------- //
+###
+GET {{baseURL}}/user/12345678949
 
 ###
 GET {{baseURL}}/order
 Cookie: userId=e1eb7b56-9e64-4230-8b8f-f33ee415efcd
 
-###
-GET {{baseURL}}/user/12345678949

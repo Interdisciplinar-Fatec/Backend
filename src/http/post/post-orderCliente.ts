@@ -20,6 +20,8 @@ export const postOrder:FastifyPluginAsyncZod = async (server) => {
                 endereco: z.string().min(4),
                 data_nascimento: z.string().min(8),
                 telefone: z.string(),
+                valor_total: z.number(),
+                descricao: z.string(),
                 items: z.array(z.object({
                     id_produto: z.uuid(),
                     quantidade: z.number().optional()
@@ -34,6 +36,8 @@ export const postOrder:FastifyPluginAsyncZod = async (server) => {
             endereco,
             name,
             telefone,
+            valor_total,
+            descricao,
             items: orderItems
         } = request.body
 
@@ -41,7 +45,8 @@ export const postOrder:FastifyPluginAsyncZod = async (server) => {
             const user = await selectOneUser(CPF)
 
             if (user.length > 0) {
-                const newOrder = await insertOrder(user[0])
+                const newOrder = await insertOrder(user[0], valor_total, descricao)
+                if (newOrder.length <= 0) throw new Error("Erro ao criar pedido")
 
                 await tx.insert(schema.item_pedido)
                 .values(
@@ -66,7 +71,8 @@ export const postOrder:FastifyPluginAsyncZod = async (server) => {
                 telefone: telefone
             })
 
-            const newOrder = await insertOrder(newUser[0])
+            const newOrder = await insertOrder(newUser[0], valor_total, descricao)
+            if(newOrder.length <= 0) throw new Error("Erro ao criar pedido")
 
             await tx.insert(schema.item_pedido)
             .values(
