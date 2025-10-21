@@ -1,4 +1,3 @@
-import { type FastifyInstance } from "fastify";
 import { selectAdmin } from "../functions/select-admin.ts";
 import bcrypt from "bcryptjs";
 import { type adminType } from "../types/adminType.ts";
@@ -9,12 +8,12 @@ export class AuthService {
         this.jwt = jwt;
     }
 
-    async login(CPF: string, senha: string){
+    async login(CPF: string, Senha: string){
         const verifyAdmin = await selectAdmin(CPF)
-        if (!verifyAdmin) { throw new Error("Administrador não encontrado") }
+        if (verifyAdmin.length <= 0) { throw new Error("Administrador não encontrado") }
 
         const admin = verifyAdmin[0]
-        const password = bcrypt.compare(admin.senha, senha)
+        const password = bcrypt.compare(Senha, admin.senha)
         if(!password) { throw new Error("Senha incorreta!")}
 
         const acesstoken = this.jwt.sign({sub: admin.id}, {expiresIn: "25min"})

@@ -23,6 +23,7 @@ import authPlugin from "./plugins/authenticate-plugin.ts"
 import { refreshToken } from "./http/login/refresh-token.ts"
 import { getOrderCPF } from "./http/get/get-orderByCPF.ts"
 import { getUserId } from "./http/get/get-userId.ts"
+import { getAuth } from "./http/get/get-authentication.ts"
 
 const server = Fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -64,6 +65,7 @@ server.register(updateOrder)
 server.register(LoginAdmin)
 server.register(refreshToken)
 server.register(getUserId)
+server.register(getAuth)
 
 server.get("/helth", () => {
     return 'OK';

@@ -10,19 +10,19 @@ export const LoginAdmin: FastifyPluginAsyncZod = async (server) => {
             description: "Validar os dados e criar o token de acesso",
             body: z.object({
                 CPF: z.string(),
-                senha: z.string().min(6)
+                Senha: z.string().min(6)
             })
         }
     }, async (request, reply) => {
-        const {CPF, senha} = request.body
+        const {CPF, Senha} = request.body
 
         const auth = new AuthService(server.jwt)
-        const {acesstoken, refreshtoken} = await auth.login(CPF, senha)
+        const {acesstoken, refreshtoken} = await auth.login(CPF, Senha)
        
-        reply.setCookie("refresjToken", refreshtoken, {
+        reply.setCookie("refreshToken", refreshtoken, {
             httpOnly: true,
-            secure: true,
-            sameSite: true,
+            secure: false,
+            sameSite: "lax",
             path: "/",
             maxAge: 60 * 60* 24 * 7
         })

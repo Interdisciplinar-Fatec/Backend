@@ -12,7 +12,16 @@ export default fp(async (server: FastifyInstance)=> {
 
     server.decorate('authenticate', async (request: FastifyRequest, reply:FastifyReply)=> {
         try {
-            await request.jwtVerify()
+      
+            const token = request.cookies.refreshToken;
+
+            if (!token) {
+                return reply.status(401).send({ message: "Token ausente" });
+            }
+
+            const decoded = server.jwt.verify(token) as {sub: string};
+            request.user = {sub: decoded.sub};
+
         } catch (error) {
             return reply.status(500).send({erro: error})
         }
