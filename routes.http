@@ -6,28 +6,34 @@ GET {{baseURL}}/helth
 
 ###
 GET {{baseURL}}/users_admin
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}
+Cookie: refreshToken={{token}}
 
 ###
 GET {{baseURL}}/user_admin/12345678949
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}
+Cookie: refreshToken={{token}}
 
 ### melhorar esta rota
 GET {{baseURL}}/orders_admin 
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}
+Cookie: refreshToken={{token}}
 
 ###
 GET {{baseURL}}/products_admin
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}
+Cookie: refreshToken={{token}}
 
 ###
 GET {{baseURL}}/items_admin/abe388e5-571e-4fcb-977c-d6e662757ea6
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}
+Cookie: refreshToken={{token}}
 
 ###
 POST {{baseURL}}/order_admin
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Cookie: refreshToken={{token}}
+# Authorization: Bearer {{token}}
 
 {
   "CPF": "12345678949",
@@ -36,11 +42,15 @@ Authorization: Bearer {{token}}
   "endereco": "Rua das Palmeiras, 789",
   "data_nascimento": "1992-03-10",
   "telefone": "(31) 98765-4321",
-  "valor_total": 50,
+  "valor_total": 40,
   "descricao": "O produto não liga mais",
   "items": [
     {
       "id_produto": "c208be64-1109-48c9-b5bc-10b28434c020",
+      "quantidade": 1
+    },
+    {
+      "id_produto": "42a95150-0280-4771-9250-3c43ddaba323",
       "quantidade": 1
     }
   ]
@@ -48,34 +58,38 @@ Authorization: Bearer {{token}}
 
 ###
 PATCH {{baseURL}}/order_admin/abe388e5-571e-4fcb-977c-d6e662757ea6/Pronto
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}
+Cookie: refreshToken={{token}}
 
 ###
 POST {{baseURL}}/product_admin
 Content-Type: application/json
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}
+Cookie: refreshToken={{token}}
 
 {
-  "nome": "TV Plsama 4p",
-  "preco": 3999.90,
-  "descricao": "Semi-nova-",
-  "marca": "LG"
+  "nome": "Celular 568gb",
+  "preco": 1059.90,
+  "descricao": "Botão de ligar quebrado",
+  "marca": "Motorola"
 }
 
 ###
 GET {{baseURL}}/product_admin/Tv
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}
+Cookie: refreshToken={{token}}
 
 
 ###
 # @name login
 POST {{baseURL}}/login
 Content-Type: application/json
-Authorization: Bearer {{token}}
+# Authorization: Bearer {{token}}
+Cookie: refreshToken={{token}}
 
 {
-  "CPF": "000.000.000-01",
-  "senha": "senhafortedoAdministrador"  
+  "CPF": "00000000001",
+  "Senha": "senhafortedoAdministrador"  
 }
 
 ###

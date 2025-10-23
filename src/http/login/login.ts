@@ -29,7 +29,7 @@ export const LoginAdmin: FastifyPluginAsyncZod = async (server) => {
 
         return reply.send({
             message: 'Login feito com sucesso',
-            "token": acesstoken
+            "token": refreshtoken
         })
     })
 }

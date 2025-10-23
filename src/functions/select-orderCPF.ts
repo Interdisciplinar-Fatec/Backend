@@ -19,6 +19,7 @@ export const selectOrderCPF = async (userId: string) => {
             quantidade: schema.item_pedido.quantidade,
             produtoNome: schema.produtos.nome,   
             produtoPreco: schema.produtos.preco, 
+            produtoDescricao: schema.produtos.descricao
         })
         .from(schema.item_pedido)
         .leftJoin(
@@ -32,12 +33,14 @@ export const selectOrderCPF = async (userId: string) => {
             pedidoId: schema.pedidos.id,
             dataPedido: schema.pedidos.data_pedido,
             valorTotal: schema.pedidos.valor_total,
-            descricao: schema.pedidos.descricao,
+            descricaoPedido: schema.pedidos.descricao,
+            status: schema.pedidos.status,
             itemId: subquery.itemId,
             produtoId: subquery.produtoId,
             quantidade: subquery.quantidade,
             produtoNome: subquery.produtoNome,
-            produtoPreco: subquery.produtoPreco
+            produtoPreco: subquery.produtoPreco,
+            produtoDescricao: subquery.produtoDescricao
         })
         .from(schema.pedidos)
         .leftJoin(subquery, eq(subquery.pedidoId, schema.pedidos.id));
@@ -49,9 +52,10 @@ export const selectOrderCPF = async (userId: string) => {
         if (!pedidosMap.has(r.pedidoId)) {
             const novoPedido = {
                 PedidoId: r.pedidoId,
+                Status: r.status,
                 DataPedido: r.dataPedido,
                 ValorPedido: r.valorTotal,
-                descricaoPedido: r.descricao,
+                descricaoPedido: r.descricaoPedido,
                 Produtos: [] as any[]
             };
 
@@ -65,7 +69,8 @@ export const selectOrderCPF = async (userId: string) => {
                 ProdutoId: r.produtoId,
                 Nome: r.produtoNome,
                 Quantidade: r.quantidade,
-                Preco: r.produtoPreco
+                Preco: r.produtoPreco,
+                ProdutoDescricao: r.produtoDescricao
             });
         }
     }
