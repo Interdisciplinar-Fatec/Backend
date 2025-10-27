@@ -4,10 +4,10 @@ import { selectOrderById } from "../../functions/select-orderById.ts";
 import { updateOrderStatus } from "../../functions/update-order.ts";
 
 export const updateOrder:FastifyPluginAsyncZod = async (server) => {
-    server.patch("/order_admin/:id/:status", {
+    server.patch("/admin/order/:id/:status", {
         preHandler: [server.authenticate],
         schema: {
-            tags: ["Pedidos"],
+            tags: ["Admin", "Pedidos"],
             summary: "Atualiza o status de um pedido",
             description: "Espera receber uma string com o nome do novo status",
             params: z.object({

@@ -21,9 +21,11 @@ import { getProdcutByName } from "./http/get/get-productByName.ts"
 import { LoginAdmin } from "./http/login/login.ts"
 import authPlugin from "./plugins/authenticate-plugin.ts"
 import { refreshToken } from "./http/login/refresh-token.ts"
-import { getOrderCPF } from "./http/get/get-orderByCPF.ts"
+import { getOrderCPF } from "./http/get/get-orderByCookie.ts"
 import { getUserId } from "./http/get/get-userId.ts"
 import { getAuth } from "./http/get/get-authentication.ts"
+import { getOrderId } from "./http/get/get-orderById.ts"
+import { LogoutUser } from "./http/login/deleteCookie.ts"
 
 const server = Fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -66,6 +68,8 @@ server.register(LoginAdmin)
 server.register(refreshToken)
 server.register(getUserId)
 server.register(getAuth)
+server.register(getOrderId)
+server.register(LogoutUser)
 
 server.get("/helth", () => {
     return 'OK';

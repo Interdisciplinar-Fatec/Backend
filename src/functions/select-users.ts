@@ -7,7 +7,7 @@ export const selectUsers = async (): Promise<userBasicType[]> => {
         id: schema.users.id,
         name: schema.users.name,
         email: schema.users.email,
-        CPF: schema.users.CPF,
+        // CPF: schema.users.CPF, (sensive data)
         crated_at: schema.users.createdAt
     }).from(schema.users)
 }

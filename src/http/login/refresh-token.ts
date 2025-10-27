@@ -5,7 +5,7 @@ import { AuthService } from "../../service/authenticate-service.ts";
 export const refreshToken: FastifyPluginAsyncZod = async (server) => {
     server.post("/refreshToken", {
         schema: {
-            tags: ["Login"],
+            tags: ["Admin", "Login"],
             summary: "Revalidar o token de acesso",
             description: "Utilizar o refresh token para revalidar o login",
             body: z.object({

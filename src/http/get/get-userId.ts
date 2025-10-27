@@ -6,7 +6,7 @@ import { env } from "../../lib/env.ts";
 export const getUserId:FastifyPluginAsyncZod = async (server) => {
     server.get("/user/:CPF", {
         schema: {
-            tags: ["Cliente"],
+            tags: ["User", "Cliente"],
             summary: "Buscar um usuario no banco",
             description: "retornar o id dele",
             params: z.object({

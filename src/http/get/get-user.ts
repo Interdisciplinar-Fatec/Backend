@@ -1,20 +1,20 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
-import { selectOneUser } from "../../functions/select-user.ts";
+import { selectOneUserId } from "../../functions/select-userId.ts";
 
 export const getUserByCPF:FastifyPluginAsyncZod = async (server) => {
-    server.get("/user_admin/:CPF", {
+    server.get("/admin/user/:id", {
         preHandler: [server.authenticate],
         schema: {
-            tags: ["Cliente"],
+            tags: ["Admin", "Cliente"],
             summary: "Buscar um usuario no banco",
             description: "retornar os dados de um user com base no CPF",
             params: z.object({
-                CPF: z.string()
+                id: z.string()
             })
         }
     },async (request, reply) => {
-        const { CPF } = request.params;
-        return await selectOneUser(CPF)
+        const { id } = request.params;
+        return await selectOneUserId(id)
     })
 }

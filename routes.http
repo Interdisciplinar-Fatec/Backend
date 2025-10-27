@@ -5,32 +5,32 @@
 GET {{baseURL}}/helth
 
 ###
-GET {{baseURL}}/users_admin
+GET {{baseURL}}/admin/users
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 
 ###
-GET {{baseURL}}/user_admin/12345678949
+GET {{baseURL}}/admin/user/12345678949
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 
 ### melhorar esta rota
-GET {{baseURL}}/orders_admin 
+GET {{baseURL}}/admin/orders 
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 
 ###
-GET {{baseURL}}/products_admin
+GET {{baseURL}}/admin/products
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 
 ###
-GET {{baseURL}}/items_admin/abe388e5-571e-4fcb-977c-d6e662757ea6
+GET {{baseURL}}/admin/items/abe388e5-571e-4fcb-977c-d6e662757ea6
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 
 ###
-POST {{baseURL}}/order_admin
+POST {{baseURL}}/admin/order
 Content-Type: application/json
 Cookie: refreshToken={{token}}
 # Authorization: Bearer {{token}}
@@ -57,25 +57,25 @@ Cookie: refreshToken={{token}}
 }
 
 ###
-PATCH {{baseURL}}/order_admin/abe388e5-571e-4fcb-977c-d6e662757ea6/Pronto
+PATCH {{baseURL}}/admin/order/abe388e5-571e-4fcb-977c-d6e662757ea6/Pronto
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 
 ###
-POST {{baseURL}}/product_admin
+POST {{baseURL}}/admin/product
 Content-Type: application/json
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 
 {
-  "nome": "Celular 568gb",
-  "preco": 1059.90,
-  "descricao": "Botão de ligar quebrado",
-  "marca": "Motorola"
+  "nome": "Celular 64gb",
+  "preco": 12059.90,
+  "descricao": "Versão Pro",
+  "marca": "Iphone"
 }
 
 ###
-GET {{baseURL}}/product_admin/Tv
+GET {{baseURL}}/admin/product/Tv
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 

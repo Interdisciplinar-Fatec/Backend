@@ -5,7 +5,7 @@ import { AuthService } from "../../service/authenticate-service.ts";
 export const LoginAdmin: FastifyPluginAsyncZod = async (server) => {
     server.post("/login", {
         schema: {
-            tags: ["Login"],
+            tags: ["Admin", "Login"],
             summary: "Login administrativo",
             description: "Validar os dados e criar o token de acesso",
             body: z.object({

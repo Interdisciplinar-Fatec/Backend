@@ -6,7 +6,7 @@ type userFixed = Omit<userType, 'created_at'> & {
     createdAt: Date
 }
 
-export const selectOrderCPF = async (userId: string) => {
+export const selectOrderId = async (userId: string) => {
     const users:userFixed[] = await db.select().from(schema.users).where(eq(schema.users.id, userId))
     if(users.length <= 0) throw new Error("Usuario não encontrado")
     const user = users[0]
@@ -43,6 +43,7 @@ export const selectOrderCPF = async (userId: string) => {
             produtoDescricao: subquery.produtoDescricao
         })
         .from(schema.pedidos)
+        .where(eq(schema.pedidos.id_cliente, userId))
         .leftJoin(subquery, eq(subquery.pedidoId, schema.pedidos.id));
 
     const pedidosMap = new Map<string, any>();

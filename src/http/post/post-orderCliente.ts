@@ -5,12 +5,14 @@ import { insertOrder } from "../../functions/insert-order.ts";
 import { insertUser } from "../../functions/insert-user.ts";
 import { db } from "../../db/connection.ts";
 import { schema } from "../../db/schemas/index.ts";
+import dayjs from "dayjs";
+
 
 export const postOrder:FastifyPluginAsyncZod = async (server) => {
-    server.post("/order_admin", {
+    server.post("/admin/order", {
         preHandler: [server.authenticate],
         schema: {
-            tags: ["Pedidos"],
+            tags: ["Admin", "Pedidos"],
             summary: "Criação de pedidos/usuarios",
             description: "Cria um usuario caso ainda não exista e seu pedido",
             body: z.object({
@@ -64,7 +66,7 @@ export const postOrder:FastifyPluginAsyncZod = async (server) => {
 
             const newUser = await insertUser({
                 CPF: CPF,
-                data_nascimento: data_nascimento,
+                data_nascimento: dayjs(data_nascimento).format("DD/MM/YYYY"),
                 endereco: endereco,
                 email: email,
                 name: name,
