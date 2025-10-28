@@ -11,10 +11,25 @@ export const getUserByCPF:FastifyPluginAsyncZod = async (server) => {
             description: "retornar os dados de um user com base no CPF",
             params: z.object({
                 id: z.string()
-            })
+            }),
+            response: {
+                200: z.array(
+                    z.object({
+                        id: z.string(),
+                        name: z.string(),
+                        CPF: z.string(),
+                        data_nascimento: z.string(),
+                        endereco: z.string(),
+                        telefone: z.string(),
+                        email: z.string(),
+                        created_at: z.date()
+                    })
+                )
+            }
         }
     },async (request, reply) => {
         const { id } = request.params;
-        return await selectOneUserId(id)
+        const user = await selectOneUserId(id)
+        return reply.status(200).send(user)
     })
 }

@@ -16,6 +16,21 @@ export const postProduct:FastifyPluginAsyncZod = async (server) => {
                 descricao: z.string().default('sem descrição'),
                 marca: z.string()
             }),
+            response: {
+                400: z.object({
+                    message: z.string(),
+                    id_produto: z.string()
+                }),
+                200: z.array(
+                    z.object({
+                        nome: z.string(),
+                        nome_normalizado: z.string(),
+                        preco: z.number(),
+                        descricao: z.string().nullable(),
+                        marca: z.string()
+                    })
+                )
+            }
         }
     }, async (request, reply)=> {
         const {
@@ -32,12 +47,14 @@ export const postProduct:FastifyPluginAsyncZod = async (server) => {
             return reply.status(400).send({message: "Produto já cadastrado!", id_produto: p[0].id})
         }
 
-        return await insertProduct({
+        const product = await insertProduct({
             nome: nome,
             nome_normalizado: nome_normalizado,
             preco: preco,
             descricao: descricao,
             marca: marca
         })
+
+        return reply.status(200).send(product)
     })
 }

@@ -2,11 +2,12 @@ import { db } from "../db/connection.ts";
 import { schema } from "../db/schemas/index.ts";
 import { eq} from "drizzle-orm";
 import { type userType } from "../types/userType.ts";
+import { type OrdersClient } from "../types/orderClient.ts";
 type userFixed = Omit<userType, 'created_at'> & {
     createdAt: Date
 }
 
-export const selectOrderId = async (userId: string) => {
+export const selectOrderId = async (userId: string): Promise<OrdersClient> => {
     const users:userFixed[] = await db.select().from(schema.users).where(eq(schema.users.id, userId))
     if(users.length <= 0) throw new Error("Usuario não encontrado")
     const user = users[0]

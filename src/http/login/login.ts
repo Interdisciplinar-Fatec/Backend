@@ -11,7 +11,13 @@ export const LoginAdmin: FastifyPluginAsyncZod = async (server) => {
             body: z.object({
                 CPF: z.string(),
                 Senha: z.string().min(6)
-            })
+            }),
+             response: {
+                200: z.object({
+                    message: z.string(),
+                    token: z.string()
+                })
+            }
         }
     }, async (request, reply) => {
         const {CPF, Senha} = request.body
@@ -27,7 +33,7 @@ export const LoginAdmin: FastifyPluginAsyncZod = async (server) => {
             maxAge: 60 * 60* 24 * 7
         })
 
-        return reply.send({
+        return reply.status(200).send({
             message: 'Login feito com sucesso',
             "token": refreshtoken
         })

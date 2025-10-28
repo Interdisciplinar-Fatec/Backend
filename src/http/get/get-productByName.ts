@@ -11,12 +11,24 @@ export const getProdcutByName:FastifyPluginAsyncZod = async (server) => {
             description: "retornar os dados de um produto com base no nome",
             params: z.object({
                 nome: z.string()
-            })
+            }),
+            response: {
+                200: z.array(
+                    z.object({
+                        id: z.string(),
+                        nome: z.string(),
+                        preco: z.number(),
+                        marca: z.string(),
+                        descricao: z.string().nullable(),
+                    })
+                )
+            }
         }
     },async (request, reply) => {
         const {nome} = request.params
 
         const nome_normalizado = nome.toLowerCase().trim()
-        return await selectProductName(nome_normalizado)
+        const prodct =  await selectProductName(nome_normalizado)
+        return reply.status(200).send(prodct)
     })
 }

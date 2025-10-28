@@ -10,7 +10,13 @@ export const refreshToken: FastifyPluginAsyncZod = async (server) => {
             description: "Utilizar o refresh token para revalidar o login",
             body: z.object({
                 token: z.string()
-            })
+            }),
+             response: {
+                200: z.object({
+                    message: z.string(),
+                    token: z.string()
+                })
+            }
         }
     }, async (request, reply) => {
         const {token} = request.body
@@ -19,7 +25,7 @@ export const refreshToken: FastifyPluginAsyncZod = async (server) => {
         const auth = new AuthService(server.jwt)
         const {acesstoken} = await auth.refreshToken(userId ,token)
        
-        return reply.send({
+        return reply.status(200).send({
             message: 'Login feito com sucesso',
             "token": acesstoken
         })

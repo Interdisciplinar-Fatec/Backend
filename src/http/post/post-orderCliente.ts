@@ -29,6 +29,15 @@ export const postOrder:FastifyPluginAsyncZod = async (server) => {
                     quantidade: z.number().optional()
                 }))
             }),
+            response: {
+                400: z.object({
+                    message: z.string()
+                }),
+                201: z.object({
+                    id_pedido: z.string(),
+                    id_user: z.string().optional()
+                })
+            }
         }
     }, async (request, reply)=> {
         const {
@@ -48,7 +57,7 @@ export const postOrder:FastifyPluginAsyncZod = async (server) => {
 
             if (user.length > 0) {
                 const newOrder = await insertOrder(user[0], valor_total, descricao)
-                if (newOrder.length <= 0) throw new Error("Erro ao criar pedido")
+                if (newOrder.length <= 0) return reply.status(400).send({ message: "Erro ao criar pedido" }) 
 
                 await tx.insert(schema.item_pedido)
                 .values(
@@ -60,7 +69,7 @@ export const postOrder:FastifyPluginAsyncZod = async (server) => {
                 )
 
                 return {
-                    id_pedido: newOrder[0].id
+                    id_pedido: newOrder[0].id,
                 } 
             }
 
@@ -74,7 +83,7 @@ export const postOrder:FastifyPluginAsyncZod = async (server) => {
             })
 
             const newOrder = await insertOrder(newUser[0], valor_total, descricao)
-            if(newOrder.length <= 0) throw new Error("Erro ao criar pedido")
+            if (newOrder.length <= 0) return reply.status(400).send({ message: "Erro ao criar pedido" }) 
 
             await tx.insert(schema.item_pedido)
             .values(

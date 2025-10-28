@@ -11,10 +11,21 @@ export const getItems:FastifyPluginAsyncZod = async (server) => {
             description: "retornar o Id do pedido e seus respectivos produtos",
             params: z.object({
                 id_pedido: z.string()
-            })
+            }),
+            response: {
+              200: z.array(
+                  z.object({
+                      id: z.string(),
+                      id_pedido: z.string(),
+                      id_produto: z.string(),
+                      quantidade: z.number().nullable()
+                  })
+              )
+            }
         }
     },async (request, reply) => {
         const {id_pedido} = request.params
-        return await selectItemsOrder(id_pedido)
+        const items = await selectItemsOrder(id_pedido)
+        return reply.status(200).send(items)
     })
 }

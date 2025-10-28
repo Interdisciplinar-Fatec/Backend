@@ -25,7 +25,7 @@ GET {{baseURL}}/admin/products
 Cookie: refreshToken={{token}}
 
 ###
-GET {{baseURL}}/admin/items/abe388e5-571e-4fcb-977c-d6e662757ea6
+GET {{baseURL}}/admin/items/b610636d-a7ab-4a0c-88ff-fff06309d327
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 
@@ -57,7 +57,7 @@ Cookie: refreshToken={{token}}
 }
 
 ###
-PATCH {{baseURL}}/admin/order/abe388e5-571e-4fcb-977c-d6e662757ea6/Pronto
+PATCH {{baseURL}}/admin/order/b610636d-a7ab-4a0c-88ff-fff06309d327/Pronto
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 
@@ -101,5 +101,5 @@ GET {{baseURL}}/user/12345678949
 
 ###
 GET {{baseURL}}/order
-Cookie: userId=e1eb7b56-9e64-4230-8b8f-f33ee415efcd
+Cookie: userId=f4da2f9c-a66c-4c44-ba19-b00bc058ddda
 

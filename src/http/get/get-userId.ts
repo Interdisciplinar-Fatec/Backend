@@ -18,8 +18,10 @@ export const getUserId:FastifyPluginAsyncZod = async (server) => {
                 }),
                 200: z.object({
                     adminCPF: z.boolean()
-                })
-            
+                }),
+                404: z.object({
+                    message: z.string()
+                }),
             }
         }
     },async (request, reply) => {
@@ -32,7 +34,7 @@ export const getUserId:FastifyPluginAsyncZod = async (server) => {
         }
         
         const user = await selectOneUser(CPF)
-        if(user.length <= 0) throw new Error("Usuario não encontrado") 
+        if (user.length <= 0) return reply.status(404).send({ message: "Usuario não encontrado" }) 
     
         reply.setCookie("userId", user[0].id, {
             httpOnly: true,

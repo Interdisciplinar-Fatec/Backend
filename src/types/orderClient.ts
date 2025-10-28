@@ -1,10 +1,16 @@
-import { type userType } from "./userType.ts"
-import { type productType } from "./productType.ts"
-
 type Order = {
-    PedidoId: string;
-    DataPedido: string;
-    Produtos: productType[];
+    PedidoId: string,
+    DataPedido: Date,
+    Status: string | null,
+    ValorPedido: number,
+    descricaoPedido:string,
+    Produtos: {
+        ProdutoId: string,
+        Nome: string | null,
+        Quantidade: number | null,
+        Preco: number | null,
+        ProdutoDescricao: string | null,
+    }[];
 };
 
 export type OrdersClient =  {

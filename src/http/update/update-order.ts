@@ -14,6 +14,15 @@ export const updateOrder:FastifyPluginAsyncZod = async (server) => {
                id: z.uuid(),
                status: z.string().min(3)
             }),
+            response: {
+                200: z.object({
+                    id: z.string(),
+                    id_user: z.string(),
+                    status: z.string().nullable(),
+                    data_pedido: z.date(),
+                    valor_total: z.number()
+                })
+            }
         }
     }, async (request, reply)=> {
         const { id, status } = request.params
