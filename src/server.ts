@@ -26,6 +26,7 @@ import { getUserId } from "./http/get/get-userId.ts"
 import { getAuth } from "./http/get/get-authentication.ts"
 import { getOrderId } from "./http/get/get-orderById.ts"
 import { LogoutUser } from "./http/login/deleteCookie.ts"
+import { ErrorHandler } from "./lib/ErrorHandler.ts"
 
 const server = Fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -70,6 +71,8 @@ server.register(getUserId)
 server.register(getAuth)
 server.register(getOrderId)
 server.register(LogoutUser)
+
+server.setErrorHandler(ErrorHandler)
 
 server.get("/helth", () => {
     return 'OK';
