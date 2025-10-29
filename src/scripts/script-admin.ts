@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import { env } from "../lib/env.ts";
 
 async function createAdmin() {
-    const CPF = "00000000001";
+    const CPF = env.CPF_ADMIN;
     const senha = env.PASSWORD_ADMIN; 
     const hash = await bcrypt.hash(senha, 10);
 

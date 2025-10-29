@@ -38,7 +38,8 @@ export const getUserId:FastifyPluginAsyncZod = async (server) => {
     
         reply.setCookie("userId", user[0].id, {
             httpOnly: true,
-            sameSite: true,
+            sameSite: "none",
+            secure: true,
             path: "/",
             maxAge: 60 * 60 * 3
         })

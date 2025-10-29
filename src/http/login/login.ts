@@ -27,10 +27,10 @@ export const LoginAdmin: FastifyPluginAsyncZod = async (server) => {
        
         reply.setCookie("refreshToken", refreshtoken, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: true,
+            sameSite: "none",
             path: "/",
-            maxAge: 60 * 60* 24 * 7
+            maxAge: 60 * 60* 24 * 7,
         })
 
         return reply.status(200).send({

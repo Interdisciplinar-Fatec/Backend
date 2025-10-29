@@ -36,7 +36,19 @@ server.setValidatorCompiler(validatorCompiler)
 server.register(authPlugin)
 
 server.register(fastifyCors, {
-    origin: "http://localhost:5173",
+    origin: (origin, cb) => {
+        const allowedOrigins = [
+            "http://localhost:5173",
+            "https://eletroconsertos.vercel.app"
+        ]
+
+        if (!origin || allowedOrigins.includes(origin)){
+            cb(null, true)
+            return;
+        }
+
+        cb(new Error("not Allowed"), false)
+    }, 
     credentials: true
 })
 
@@ -78,6 +90,9 @@ server.get("/helth", () => {
     return 'OK';
 })
 
-server.listen({port: env.PORT}).then(() => {
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("DB_URL:", env.DATABASE_URL);
+
+server.listen({ port: Number(env.PORT) || 8000, host: '0.0.0.0' }).then(() => {
     console.log(`HTTP Server is running! port:${env.PORT}`)
 })
