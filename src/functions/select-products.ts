@@ -1,3 +1,4 @@
+import { eq } from "drizzle-orm";
 import { db } from "../db/connection.ts";
 import { schema } from "../db/schemas/index.ts";
 import {type productType } from "../types/productType.ts";
@@ -10,4 +11,5 @@ export const selectProducts = async ():Promise<productType[]> => {
         descricao: schema.produtos.descricao,
         marca: schema.produtos.marca
     }).from(schema.produtos)
+    .where(eq(schema.produtos.ativo, true))
 }

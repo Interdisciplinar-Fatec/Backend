@@ -43,7 +43,7 @@ export const postProduct:FastifyPluginAsyncZod = async (server) => {
         const nome_normalizado = nome.toLowerCase().trim()
 
         const p = await selectProductName(nome_normalizado)
-        if(p.length > 0){
+        if(p.length > 0 && p[0].marca === marca){
             return reply.status(400).send({message: "Produto já cadastrado!", id_produto: p[0].id})
         }
 

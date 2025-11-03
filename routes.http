@@ -68,14 +68,14 @@ Content-Type: application/json
 Cookie: refreshToken={{token}}
 
 {
-  "nome": "Celular 64gb",
+  "nome": "Tablet",
   "preco": 12059.90,
-  "descricao": "Versão Pro",
+  "descricao": "Tablet 560gb",
   "marca": "Iphone"
 }
 
 ###
-GET {{baseURL}}/admin/product/Tv
+GET {{baseURL}}/admin/product/Tablet
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 
@@ -97,6 +97,14 @@ Cookie: refreshToken={{token}}
 
 ###
 POST {{baseURL}}/admin/logout
+Cookie: refreshToken={{token}}
+
+###
+PATCH {{baseURL}}/admin/product/desactivate/b2872925-efb5-453a-8217-99b9868250fb
+Cookie: refreshToken={{token}}
+
+###
+PATCH {{baseURL}}/admin/product/reactivate/b2872925-efb5-453a-8217-99b9868250fb
 Cookie: refreshToken={{token}}
 
 // ------------- Public Routes  ----------------- //

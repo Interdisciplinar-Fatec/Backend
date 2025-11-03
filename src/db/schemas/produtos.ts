@@ -1,4 +1,4 @@
-import { pgTable, real, text, uuid } from "drizzle-orm/pg-core";
+import { boolean, pgTable, real, text, uuid } from "drizzle-orm/pg-core";
 
 export const produtos = pgTable('produtos', {
     id: uuid().primaryKey().defaultRandom(),
@@ -7,4 +7,5 @@ export const produtos = pgTable('produtos', {
     preco: real().notNull(),
     marca: text().notNull(),
     descricao: text(),
+    ativo: boolean().notNull().default(true)
 })

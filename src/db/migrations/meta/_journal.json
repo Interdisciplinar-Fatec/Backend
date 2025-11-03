@@ -15,6 +15,13 @@
       "when": 1760488196432,
       "tag": "0001_sparkling_hellion",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1762196838195,
+      "tag": "0002_violet_crusher_hogan",
+      "breakpoints": true
     }
   ]
 }

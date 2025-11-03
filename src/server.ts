@@ -2,11 +2,11 @@ import fastifyCors from "@fastify/cors"
 import fastifySwagger from "@fastify/swagger"
 import fastifySwaggerUi from "@fastify/swagger-ui"
 import Fastify from "fastify"
-import { 
+import {
     jsonSchemaTransform,
-    serializerCompiler, 
-    validatorCompiler, 
-    type ZodTypeProvider 
+    serializerCompiler,
+    validatorCompiler,
+    type ZodTypeProvider
 } from "fastify-type-provider-zod"
 import { env } from "./lib/env.ts"
 import { getUsers } from "./http/get/get-users.ts"
@@ -28,6 +28,9 @@ import { getOrderId } from "./http/get/get-orderById.ts"
 import { LogoutUser } from "./http/login/deleteCookie.ts"
 import { ErrorHandler } from "./lib/ErrorHandler.ts"
 import { LogoutAdmin } from "./http/login/logout.ts"
+import { desactivateProduct } from "./http/update/desactivate-product.ts"
+import { reactivateProduct } from "./http/update/reactivate-product.ts"
+
 
 const server = Fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -43,13 +46,13 @@ server.register(fastifyCors, {
             "https://eletroconsertos.vercel.app"
         ]
 
-        if (!origin || allowedOrigins.includes(origin)){
+        if (!origin || allowedOrigins.includes(origin)) {
             cb(null, true)
             return;
         }
 
         cb(new Error("not Allowed"), false)
-    }, 
+    },
     credentials: true
 })
 
@@ -85,6 +88,9 @@ server.register(getAuth)
 server.register(getOrderId)
 server.register(LogoutUser)
 server.register(LogoutAdmin)
+server.register(desactivateProduct)
+server.register(reactivateProduct)
+
 
 server.setErrorHandler(ErrorHandler)
 
