@@ -95,9 +95,14 @@ Cookie: refreshToken={{token}}
 ###
 @token = {{login.response.body.$.token}}
 
+###
+POST {{baseURL}}/admin/logout
+Cookie: refreshToken={{token}}
+
 // ------------- Public Routes  ----------------- //
 ###
 GET {{baseURL}}/user/12345678949
+
 
 ###
 GET {{baseURL}}/order

@@ -22,7 +22,6 @@ export const LogoutUser: FastifyPluginAsyncZod = async (server) => {
             maxAge: 0,
         })
 
-
         return reply.status(200).send({
             message: 'Logout feito com sucesso'
         })

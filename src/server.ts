@@ -27,6 +27,7 @@ import { getAuth } from "./http/get/get-authentication.ts"
 import { getOrderId } from "./http/get/get-orderById.ts"
 import { LogoutUser } from "./http/login/deleteCookie.ts"
 import { ErrorHandler } from "./lib/ErrorHandler.ts"
+import { LogoutAdmin } from "./http/login/logout.ts"
 
 const server = Fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -83,6 +84,7 @@ server.register(getUserId)
 server.register(getAuth)
 server.register(getOrderId)
 server.register(LogoutUser)
+server.register(LogoutAdmin)
 
 server.setErrorHandler(ErrorHandler)
 
