@@ -15,12 +15,18 @@ export const updateOrder:FastifyPluginAsyncZod = async (server) => {
                status: z.string().min(3)
             }),
             response: {
+                500: z.object({
+                    message: z.string(),
+                }),
                 200: z.object({
-                    id: z.string(),
-                    id_user: z.string(),
-                    status: z.string().nullable(),
-                    data_pedido: z.date(),
-                    valor_total: z.number()
+                    message: z.string(),
+                    order: z.object({
+                        id: z.string(),
+                        id_user: z.string(),
+                        status: z.string().nullable(),
+                        data_pedido: z.date(),
+                        valor_total: z.number()
+                    }),
                 })
             }
         }
@@ -28,8 +34,12 @@ export const updateOrder:FastifyPluginAsyncZod = async (server) => {
         const { id, status } = request.params
 
         await updateOrderStatus(status, id)
-
         const order = await selectOrderById(id)
-        return reply.status(200).send(order[0])
+        if (order.length <= 0) return reply.status(500).send({ message: "Erro ao atualizar pedido" })
+
+        return reply.status(200).send({
+            message: "Status atualizado com sucesso",
+            order: order[0]
+        })
     })
 }

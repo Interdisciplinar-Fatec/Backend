@@ -10,7 +10,7 @@ GET {{baseURL}}/admin/users
 Cookie: refreshToken={{token}}
 
 ###
-GET {{baseURL}}/admin/user/12345678949
+GET {{baseURL}}/admin/user/f4da2f9c-a66c-4c44-ba19-b00bc058ddda
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 
@@ -21,6 +21,11 @@ Cookie: refreshToken={{token}}
 
 ###
 GET {{baseURL}}/admin/products
+# Authorization: Bearer {{token}}
+Cookie: refreshToken={{token}}
+
+###
+GET {{baseURL}}/admin/products/desactivated
 # Authorization: Bearer {{token}}
 Cookie: refreshToken={{token}}
 

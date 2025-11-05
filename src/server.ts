@@ -30,6 +30,7 @@ import { ErrorHandler } from "./lib/ErrorHandler.ts"
 import { LogoutAdmin } from "./http/login/logout.ts"
 import { desactivateProduct } from "./http/update/desactivate-product.ts"
 import { reactivateProduct } from "./http/update/reactivate-product.ts"
+import { getOrderDesactivated } from "./http/get/get-productsDesactivated.ts"
 
 
 const server = Fastify().withTypeProvider<ZodTypeProvider>()
@@ -53,7 +54,8 @@ server.register(fastifyCors, {
 
         cb(new Error("not Allowed"), false)
     },
-    credentials: true
+    credentials: true,
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
 })
 
 server.register(fastifySwagger, {
@@ -90,6 +92,7 @@ server.register(LogoutUser)
 server.register(LogoutAdmin)
 server.register(desactivateProduct)
 server.register(reactivateProduct)
+server.register(getOrderDesactivated)
 
 
 server.setErrorHandler(ErrorHandler)

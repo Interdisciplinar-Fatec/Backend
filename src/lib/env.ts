@@ -5,7 +5,7 @@ const envSchema = z.object({
     DATABASE_URL: z.string().startsWith("postgres://"),
     JWT_KEY: z.string(),
     CPF_ADMIN: z.string(),
-    PASSWORD_ADMIN: z.string()
+    PASSWORD_ADMIN: z.string(),
 })
 
 export const env = envSchema.parse(process.env)
