@@ -31,15 +31,14 @@ import { LogoutAdmin } from "./http/login/logout.ts"
 import { desactivateProduct } from "./http/update/desactivate-product.ts"
 import { reactivateProduct } from "./http/update/reactivate-product.ts"
 import { getOrderDesactivated } from "./http/get/get-productsDesactivated.ts"
-
+import cookie from "@fastify/cookie";
 
 const server = Fastify().withTypeProvider<ZodTypeProvider>()
 
 server.setSerializerCompiler(serializerCompiler)
 server.setValidatorCompiler(validatorCompiler)
 
-server.register(authPlugin)
-
+server.register(cookie)
 server.register(fastifyCors, {
     origin: (origin, cb) => {
         const allowedOrigins = [
@@ -47,16 +46,20 @@ server.register(fastifyCors, {
             "https://eletroconsertos.vercel.app"
         ]
 
-        if (!origin || allowedOrigins.includes(origin)) {
-            cb(null, true)
-            return;
-        }
+        if(!origin) return cb(null, true)
+        const normalizedOrigin = origin.replace(/\/$/, "").toLowerCase()
 
-        cb(new Error("not Allowed"), false)
+        if(allowedOrigins.includes(normalizedOrigin)) return cb(null, true)
+        else {
+            console.warn("CORS bloqueado para origem:", origin);
+            return cb(new Error("Not allowed bu CORS"), false)
+        }
     },
     credentials: true,
-    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "PUT", "POST", "PATCH", "OPTIONS", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
 })
+server.register(authPlugin)
 
 server.register(fastifySwagger, {
     openapi: {
