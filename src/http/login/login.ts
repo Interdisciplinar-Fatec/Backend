@@ -45,8 +45,6 @@ export const LoginAdmin: FastifyPluginAsyncZod = async (server) => {
             })
 
         } catch (error) {
-            // server.log.error("Erro ao tentar fazer login: ", error)
-
             if(error instanceof Error && error.message.includes("incorreta")){
                 return reply.status(401).send({ message: "Credenciais inválidas." })
             }

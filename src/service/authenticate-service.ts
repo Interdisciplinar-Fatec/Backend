@@ -1,6 +1,7 @@
 import { selectAdmin } from "../functions/select-admin.ts";
 import bcrypt from "bcryptjs";
 import { type adminType } from "../types/adminType.ts";
+import { env } from "../lib/env.ts";
 
 export class AuthService {
     private jwt: any;

@@ -11,7 +11,16 @@ async function createAdmin() {
 
     const adminExisting = await db.select().from(schema.admin).where(eq(schema.admin.CPF, CPF));
     if (adminExisting.length > 0) {
-        console.log("Admin já existe!");
+        const password = await bcrypt.compare(senha, adminExisting[0].senha)
+        if(password){
+            console.log("Admin já existe!");
+            return;
+        }
+
+        await db.update(schema.admin).set({senha: hash})
+        .where(eq(schema.admin.CPF, CPF))
+
+        console.log("Admin já existe! Mas a senha foi modificada");
         return;
     }
 
