@@ -16,26 +16,42 @@ export const LoginAdmin: FastifyPluginAsyncZod = async (server) => {
                 200: z.object({
                     message: z.string(),
                     token: z.string()
+                }),
+                401: z.object({
+                    message: z.string(),
+                }),
+                500: z.object({
+                    message: z.string(),
                 })
             }
         }
     }, async (request, reply) => {
         const {CPF, Senha} = request.body
+        try {
+            const auth = new AuthService(server.jwt)
+            const { acesstoken, refreshtoken } = await auth.login(CPF, Senha)
 
-        const auth = new AuthService(server.jwt)
-        const {acesstoken, refreshtoken} = await auth.login(CPF, Senha)
-       
-        reply.setCookie("refreshToken", refreshtoken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: "lax",
-            path: "/",
-            maxAge: 60 * 60* 24 * 7,
-        })
+            reply.setCookie("refreshToken", refreshtoken, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "lax",
+                path: "/",
+                maxAge: 60 * 60 * 24 * 7,
+            })
 
-        return reply.status(200).send({
-            message: 'Login feito com sucesso',
-            "token": refreshtoken
-        })
+            return reply.status(200).send({
+                message: 'Login feito com sucesso',
+                "token": refreshtoken
+            })
+
+        } catch (error) {
+            // server.log.error("Erro ao tentar fazer login: ", error)
+
+            if(error instanceof Error && error.message.includes("incorreta")){
+                return reply.status(401).send({ message: "Credenciais inválidas." })
+            }
+
+            return reply.status(500).send({ message: "Erro interno do servidor." })
+        }
     })
 }

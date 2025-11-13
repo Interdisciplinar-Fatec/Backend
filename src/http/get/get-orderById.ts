@@ -14,6 +14,9 @@ export const getOrderId: FastifyPluginAsyncZod = async (server) => {
                 id: z.string()
             }),
             response: {
+                 500: z.object({
+                    message: z.string()
+                }),
                  404: z.object({
                     message: z.string()
                 }),
@@ -50,14 +53,18 @@ export const getOrderId: FastifyPluginAsyncZod = async (server) => {
             }
         }
     }, async (request, reply) => {
-        const { id } = request.params;
+       try {
+           const { id } = request.params;
 
-        const user = await selectOneUserId(id)
-        if (user.length <= 0) {
-            return reply.status(404).send({ message: "Usuario não encontrado" })
-        }
-        
-        const orders: OrdersClient = await selectOrderId(user[0].id)
-        return reply.status(200).send(orders)
+           const user = await selectOneUserId(id)
+           if (user.length <= 0) {
+               return reply.status(404).send({ message: "Usuario não encontrado" })
+           }
+
+           const orders: OrdersClient = await selectOrderId(user[0].id)
+           return reply.status(200).send(orders)
+       } catch (error) {
+           return reply.status(500).send({ message: "Erro interno do servidor" });
+       }
     })
 }

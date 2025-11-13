@@ -14,6 +14,9 @@ export const getOrderCPF: FastifyPluginAsyncZod = async (server) => {
                 userId: z.string()
             }), 
             response: {
+                500: z.object({
+                    message: z.string()
+                }),
                 404: z.object({
                     message: z.string()
                 }),
@@ -54,30 +57,34 @@ export const getOrderCPF: FastifyPluginAsyncZod = async (server) => {
         }
     }, async (request, reply) => {
         const userIdCookie = request.cookies.userId;
-        const {userId: userIdStorage} = request.params;
+       try {
+           const { userId: userIdStorage } = request.params;
 
-        if (userIdCookie) {
-            const user = await selectOneUserId(userIdCookie)
-            if (user.length <= 0) {
+           if (userIdCookie) {
+               const user = await selectOneUserId(userIdCookie)
+               if (user.length <= 0) {
 
-                return reply.status(404).send({ message: "Usuario não encontrado" })
-            }
+                   return reply.status(404).send({ message: "Usuario não encontrado" })
+               }
 
-            const orders: OrdersClient = await selectOrderId(user[0].id)
-            return reply.status(200).send(orders)
-        }
+               const orders: OrdersClient = await selectOrderId(user[0].id)
+               return reply.status(200).send(orders)
+           }
 
-        if (userIdStorage) {
-            const user = await selectOneUserId(userIdStorage)
-            if (user.length <= 0) {
+           if (userIdStorage) {
+               const user = await selectOneUserId(userIdStorage)
+               if (user.length <= 0) {
 
-                return reply.status(404).send({ message: "Usuario não encontrado" })
-            }
+                   return reply.status(404).send({ message: "Usuario não encontrado" })
+               }
 
-            const orders: OrdersClient = await selectOrderId(user[0].id)
-            return reply.status(200).send(orders)
-        }
+               const orders: OrdersClient = await selectOrderId(user[0].id)
+               return reply.status(200).send(orders)
+           }
 
-        return reply.status(401).send({ message: "Usuário não autenticado" });
+           return reply.status(401).send({ message: "Usuário não autenticado" });
+       } catch (error) {
+            return reply.status(500).send({ message: "Erro interno do servidor" });
+       }
     })
 }
