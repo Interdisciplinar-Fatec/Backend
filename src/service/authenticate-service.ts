@@ -13,7 +13,7 @@ export class AuthService {
         if (verifyAdmin.length <= 0) { throw new Error("Administrador não encontrado") }
 
         const admin = verifyAdmin[0]
-        const password = bcrypt.compare(Senha, admin.senha)
+        const password = await bcrypt.compare(Senha, admin.senha)
         if(!password) { throw new Error("Senha incorreta!")}
 
         const acesstoken = this.jwt.sign({sub: admin.id}, {expiresIn: "25min"})
