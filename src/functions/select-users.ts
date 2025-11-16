@@ -8,6 +8,6 @@ export const selectUsers = async (): Promise<userBasicType[]> => {
         name: schema.users.name,
         email: schema.users.email,
         // CPF: schema.users.CPF, (sensive data)
-        crated_at: schema.users.createdAt
+        created_at: schema.users.createdAt
     }).from(schema.users)
 }

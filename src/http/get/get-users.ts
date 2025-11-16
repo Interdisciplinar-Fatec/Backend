@@ -15,7 +15,7 @@ export const getUsers:FastifyPluginAsyncZod = async (server) => {
                         id: z.string(),
                         name: z.string(),
                         email: z.string(),
-                        crated_at: z.date()
+                        created_at: z.date()
                     })
                 )
             }

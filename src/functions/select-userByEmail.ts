@@ -3,7 +3,7 @@ import { schema } from "../db/schemas/index.ts";
 import { eq } from "drizzle-orm";
 import { type userType } from "../types/userType.ts";
 
-export const selectOneUser = async (CPF: string): Promise<userType[]> => {
+export const selectuserByEmail = async (email: string): Promise<userType[]> => {
     return await db.select({
         id: schema.users.id,
         name: schema.users.name,
@@ -15,5 +15,5 @@ export const selectOneUser = async (CPF: string): Promise<userType[]> => {
         created_at: schema.users.createdAt
     })
     .from(schema.users)
-    .where(eq(schema.users.CPF, CPF)) 
+    .where(eq(schema.users.email, email)) 
 }

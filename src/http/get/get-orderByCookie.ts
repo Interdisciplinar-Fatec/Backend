@@ -1,7 +1,7 @@
 import { type FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { selectOrderId } from "../../functions/select-orderId.ts";
 import { type OrdersClient } from "../../types/orderClient.ts";
-import { selectOneUserId } from "../../functions/select-userId.ts";
+import { selectOneUserId } from "../../functions/select-userById.ts";
 import z from "zod";
 
 export const getOrderCPF: FastifyPluginAsyncZod = async (server) => {
@@ -12,7 +12,7 @@ export const getOrderCPF: FastifyPluginAsyncZod = async (server) => {
             description: "Retorna os dados de um cliente, seus pedidos e os produtos de cada pedido, com base no CPF informado.",
             params: z.object({
                 userId: z.string()
-            }), 
+            }),
             response: {
                 500: z.object({
                     message: z.string()
@@ -40,7 +40,7 @@ export const getOrderCPF: FastifyPluginAsyncZod = async (server) => {
                             DataPedido: z.date(),
                             Status: z.string().nullable(),
                             ValorPedido: z.number(),
-                            descricaoPedido:z.string(),
+                            descricaoPedido: z.string(),
                             Produtos: z.array(
                                 z.object({
                                     ProdutoId: z.string(),
@@ -57,34 +57,34 @@ export const getOrderCPF: FastifyPluginAsyncZod = async (server) => {
         }
     }, async (request, reply) => {
         const userIdCookie = request.cookies.userId;
-       try {
-           const { userId: userIdStorage } = request.params;
+        try {
+            const { userId: userIdStorage } = request.params;
 
-           if (userIdCookie) {
-               const user = await selectOneUserId(userIdCookie)
-               if (user.length <= 0) {
+            if (userIdCookie) {
+                const user = await selectOneUserId(userIdCookie)
+                if (user.length <= 0) {
 
-                   return reply.status(404).send({ message: "Usuario não encontrado" })
-               }
+                    return reply.status(404).send({ message: "Usuario não encontrado" })
+                }
 
-               const orders: OrdersClient = await selectOrderId(user[0].id)
-               return reply.status(200).send(orders)
-           }
+                const orders: OrdersClient = await selectOrderId(user[0].id)
+                return reply.status(200).send(orders)
+            }
 
-           if (userIdStorage) {
-               const user = await selectOneUserId(userIdStorage)
-               if (user.length <= 0) {
+            if (userIdStorage) {
+                const user = await selectOneUserId(userIdStorage)
+                if (user.length <= 0) {
 
-                   return reply.status(404).send({ message: "Usuario não encontrado" })
-               }
+                    return reply.status(404).send({ message: "Usuario não encontrado" })
+                }
 
-               const orders: OrdersClient = await selectOrderId(user[0].id)
-               return reply.status(200).send(orders)
-           }
+                const orders: OrdersClient = await selectOrderId(user[0].id)
+                return reply.status(200).send(orders)
+            }
 
-           return reply.status(401).send({ message: "Usuário não autenticado" });
-       } catch (error) {
+            return reply.status(401).send({ message: "Usuário não autenticado" });
+        } catch (error) {
             return reply.status(500).send({ message: "Erro interno do servidor" });
-       }
+        }
     })
 }

@@ -1,16 +1,15 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
-import { selectOneUserId } from "../../functions/select-userId.ts";
+import { selectUserByName } from "../../functions/select-userByName.ts";
 
-export const getUserByCPF:FastifyPluginAsyncZod = async (server) => {
-    server.get("/admin/user/:id", {
-        preHandler: [server.authenticate],
+export const getUserByName: FastifyPluginAsyncZod = async (server) => {
+    server.get("/user/name/:name", {
         schema: {
-            tags: ["Admin", "Cliente"],
+            tags: ["User", "Cliente"],
             summary: "Buscar um usuario no banco",
-            description: "retornar os dados de um user com base no CPF",
+            description: "retornar o id dele",
             params: z.object({
-                id: z.string()
+                name: z.string()
             }),
             response: {
                 200: z.array(
@@ -24,12 +23,18 @@ export const getUserByCPF:FastifyPluginAsyncZod = async (server) => {
                         email: z.string(),
                         created_at: z.date()
                     })
-                )
+                ),
+                404: z.object({
+                    message: z.string()
+                }),
             }
         }
-    },async (request, reply) => {
-        const { id } = request.params;
-        const user = await selectOneUserId(id)
+    }, async (request, reply) => {
+        const { name } = request.params;
+
+        const user = await selectUserByName(name)
+        if (user.length <= 0) return reply.status(404).send({ message: "Usuario não encontrado" })
+
         return reply.status(200).send(user)
     })
 }

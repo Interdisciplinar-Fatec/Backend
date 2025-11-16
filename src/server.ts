@@ -13,7 +13,7 @@ import { getUsers } from "./http/get/get-users.ts"
 import { getOrder } from "./http/get/get-order.ts"
 import { getProduct } from "./http/get/get-product.ts"
 import { getItems } from "./http/get/get-itemPedido.ts"
-import { getUserByCPF } from "./http/get/get-user.ts"
+import { getUserById } from "./http/get/get-userById.ts"
 import { postOrder } from "./http/post/post-orderCliente.ts"
 import { updateOrder } from "./http/update/update-order.ts"
 import { postProduct } from "./http/post/post-product.ts"
@@ -32,6 +32,9 @@ import { desactivateProduct } from "./http/update/desactivate-product.ts"
 import { reactivateProduct } from "./http/update/reactivate-product.ts"
 import { getOrderDesactivated } from "./http/get/get-productsDesactivated.ts"
 import cookie from "@fastify/cookie";
+import { getUserByCPF } from "./http/get/get-userByCPF.ts"
+import { getUserByName } from "./http/get/get-userByName.ts"
+import { getUserByEmail } from "./http/get/get-userByEmail.ts"
 
 const server = Fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -77,7 +80,7 @@ server.register(fastifySwaggerUi, {
 })
 
 server.register(getUsers)
-server.register(getUserByCPF)
+server.register(getUserById)
 server.register(getOrder)
 server.register(getProduct)
 server.register(getItems)
@@ -96,6 +99,9 @@ server.register(LogoutAdmin)
 server.register(desactivateProduct)
 server.register(reactivateProduct)
 server.register(getOrderDesactivated)
+server.register(getUserByCPF)
+server.register(getUserByName)
+server.register(getUserByEmail)
 
 
 server.setErrorHandler(ErrorHandler)

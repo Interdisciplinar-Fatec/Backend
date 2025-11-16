@@ -3,8 +3,8 @@ import z from "zod";
 import { selectUserByCPF } from "../../functions/select-userByCPF.ts";
 import { env } from "../../lib/env.ts";
 
-export const getUserId: FastifyPluginAsyncZod = async (server) => {
-    server.get("/user/:CPF", {
+export const getUserByCPF: FastifyPluginAsyncZod = async (server) => {
+    server.get("/user/cpf/:CPF", {
         schema: {
             tags: ["User", "Cliente"],
             summary: "Buscar um usuario no banco",
@@ -13,12 +13,18 @@ export const getUserId: FastifyPluginAsyncZod = async (server) => {
                 CPF: z.string()
             }),
             response: {
-                201: z.object({
-                    userId: z.string()
-                }),
-                200: z.object({
-                    adminCPF: z.boolean()
-                }),
+                200: z.array(
+                    z.object({
+                        id: z.string(),
+                        name: z.string(),
+                        CPF: z.string(),
+                        data_nascimento: z.string(),
+                        endereco: z.string(),
+                        telefone: z.string(),
+                        email: z.string(),
+                        created_at: z.date()
+                    })
+                ),
                 404: z.object({
                     message: z.string()
                 }),
@@ -27,23 +33,9 @@ export const getUserId: FastifyPluginAsyncZod = async (server) => {
     }, async (request, reply) => {
         const { CPF } = request.params;
 
-        if (CPF === env.CPF_ADMIN) {
-            return reply.status(200).send({
-                adminCPF: true
-            })
-        }
-
         const user = await selectUserByCPF(CPF)
         if (user.length <= 0) return reply.status(404).send({ message: "Usuario não encontrado" })
 
-        reply.setCookie("userId", user[0].id, {
-            httpOnly: true,
-            sameSite: "none",
-            secure: true,
-            path: "/",
-            maxAge: 60 * 60 * 3
-        })
-
-        return reply.status(201).send({ userId: user[0].id })
+        return reply.status(200).send(user)
     })
 }

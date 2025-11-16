@@ -1,7 +1,7 @@
 import { type FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { selectOrderId } from "../../functions/select-orderId.ts";
 import { type OrdersClient } from "../../types/orderClient.ts";
-import { selectOneUserId } from "../../functions/select-userId.ts";
+import { selectOneUserId } from "../../functions/select-userById.ts";
 import z from "zod";
 
 export const getOrderId: FastifyPluginAsyncZod = async (server) => {
@@ -14,13 +14,13 @@ export const getOrderId: FastifyPluginAsyncZod = async (server) => {
                 id: z.string()
             }),
             response: {
-                 500: z.object({
+                500: z.object({
                     message: z.string()
                 }),
-                 404: z.object({
+                404: z.object({
                     message: z.string()
                 }),
-                 200: z.object({
+                200: z.object({
                     user: z.object({
                         id: z.string(),
                         name: z.string(),
@@ -37,7 +37,7 @@ export const getOrderId: FastifyPluginAsyncZod = async (server) => {
                             DataPedido: z.date(),
                             Status: z.string().nullable(),
                             ValorPedido: z.number(),
-                            descricaoPedido:z.string(),
+                            descricaoPedido: z.string(),
                             Produtos: z.array(
                                 z.object({
                                     ProdutoId: z.string(),
@@ -53,18 +53,18 @@ export const getOrderId: FastifyPluginAsyncZod = async (server) => {
             }
         }
     }, async (request, reply) => {
-       try {
-           const { id } = request.params;
+        try {
+            const { id } = request.params;
 
-           const user = await selectOneUserId(id)
-           if (user.length <= 0) {
-               return reply.status(404).send({ message: "Usuario não encontrado" })
-           }
+            const user = await selectOneUserId(id)
+            if (user.length <= 0) {
+                return reply.status(404).send({ message: "Usuario não encontrado" })
+            }
 
-           const orders: OrdersClient = await selectOrderId(user[0].id)
-           return reply.status(200).send(orders)
-       } catch (error) {
-           return reply.status(500).send({ message: "Erro interno do servidor" });
-       }
+            const orders: OrdersClient = await selectOrderId(user[0].id)
+            return reply.status(200).send(orders)
+        } catch (error) {
+            return reply.status(500).send({ message: "Erro interno do servidor" });
+        }
     })
 }
