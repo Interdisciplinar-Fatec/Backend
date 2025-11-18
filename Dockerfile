@@ -10,4 +10,6 @@ COPY . .
 
 EXPOSE 8000
 
+RUN npm test
+
 CMD ["sh", "-c", "npm run migrate && npm run createAdmin && npm run start"]

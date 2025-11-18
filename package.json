@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node --env-file .env --experimental-strip-types --watch src/server.ts",
     "start": "node src/server.ts",
-    "test": "vitest --env-file .env --experimental-strip-types",
+    "test": "vitest",
     "createAdmin": "node --env-file .env ./src/scripts/script-admin.ts",
     "db:seed": "node --env-file .env --experimental-strip-types  ./src/db/seed.ts",
     "db:studio": "npx drizzle-kit studio",
@@ -36,6 +36,7 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
+    "dotenv": "^17.2.3",
     "drizzle-seed": "^0.3.1",
     "vitest": "^4.0.6"
   }
